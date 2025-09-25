@@ -5,6 +5,19 @@ const Board = () => {
     const [state, setState] = useState(Array(9).fill(null));
     const [isXTurn, setIsXTurn] = useState(true);
 
+    /*
+
+        returns
+
+            X: if X wins
+            O: if O wins
+
+            "draw": if it's a draw
+
+            null: if the game hasn't ended yet
+
+    */
+
     const checkWinner = () => {
         const winnerLogic = [
             [0, 1, 2],
@@ -17,6 +30,7 @@ const Board = () => {
             [2, 4, 6]
         ];
 
+        // finding the winner:
         for (let logic of winnerLogic) {
             const [a, b, c] = logic;
             if (state[a] !== null && state[a] === state[b] && state[b] === state[c]) {
@@ -24,7 +38,14 @@ const Board = () => {
             }
         }
 
-        return null;
+        // seeing if the board is full:
+        for (let currentState of state) {
+            if (currentState == null) {
+                return null;
+            }
+        } 
+
+        return "draw";
     };
 
     const winner = checkWinner();
@@ -46,9 +67,8 @@ const Board = () => {
 
     return (
         <div className="board-container">
-            {winner ? (
-                <>{winner} won the game <button onClick={() => handleReset()}> Play Again </button></>
-            ) : (
+            {
+                winner ? (winner == "draw" ? <> EVERYONE WON! YAY! </> : <> {winner} WON! YAY! </>) :
                 <>
                     <h4> Player { isXTurn ? 'X' : 'O' } please move </h4>
                     <div className="board-row">
@@ -69,7 +89,7 @@ const Board = () => {
                         <Square onClick={() => handleClick(8)} value={state[8]} />
                     </div>
                 </>
-            )}
+            }
         </div>
     );
 }

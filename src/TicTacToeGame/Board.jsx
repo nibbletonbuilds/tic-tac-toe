@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Square from "./Square";
+import ThemeToggle from "./ThemeToggle";
 
 const Board = () => {
     const [state, setState] = useState(Array(9).fill(null));
@@ -88,6 +89,8 @@ const Board = () => {
                         <Square onClick={() => handleClick(7)} value={state[7]} />
                         <Square onClick={() => handleClick(8)} value={state[8]} />
                     </div>
+
+                    <ThemeToggle />
                 </>
             }
         </div>
